@@ -37,8 +37,7 @@ def redrawGameWindow():
     pygame.display.update()
 
 
-#mainloop
-run = True
+run = True #mainloop
 while run:
     clock.tick(27)
 
