@@ -13,24 +13,17 @@ char = pygame.image.load(path + 'standing.png')
 
 clock = pygame.time.Clock()
 
-x = 50
-y = 400
-width = 64
-height = 64
-vel = 5
-isJump = False
-jumpCount = 10
-left = False
-right = False
-walkCount = 0
+x, y = 50, 400
+width, height = 64, 64
+vel, jumpCount, walkCount = 5, 10, 0
+isJump, left, right = False, False, False
 
 
 def redrawGameWindow():
     global walkCount
     win.blit(bg, (0,0))
 
-    if walkCount + 1 >= 27:
-        walkCount = 0
+    if walkCount + 1 >= 27: walkCount = 0
 
     if left:
         win.blit(walkLeft[walkCount//3], (x,y))
@@ -50,40 +43,30 @@ while run:
     clock.tick(27)
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
+        if event.type == pygame.QUIT: run = False
 
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_LEFT] and x > vel:
         x -= vel
-        left = True
-        right = False
+        left, right = True, False
     elif keys[pygame.K_RIGHT] and x < 500 - width - vel:
         x += vel
-        right = True
-        left = False
+        right, left = True, False
     else:
-        right = False
-        left = False
-        walkCount = 0
+        right, left, walkCount = False, False, 0
         
     if not(isJump):
         if keys[pygame.K_SPACE]:
-            isJump = True
-            right = False
-            left = False
-            walkCount = 0
+            isJump, right, left, walkCount = True, False, False, 0
     else:
         if jumpCount >= -10:
             neg = 1
-            if jumpCount < 0:
-                neg = -1
+            if jumpCount < 0: neg = -1
             y -= (jumpCount ** 2) * 0.5 * neg
             jumpCount -= 1
         else:
-            isJump = False
-            jumpCount = 10
+            isJump, jumpCount = False, 10
             
     redrawGameWindow()
 
